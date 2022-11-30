@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class RSA {
     static int dec = 0;
-    static double enc = 0;
+    static BigInteger enc;
 
     public static void main(String args[]) {
         int p, q, n, z, d = 0, e, i;
@@ -40,17 +40,17 @@ public class RSA {
             msg = sc.nextInt();
         }
         z = (p - 1) * (q - 1); // fi(n);
-        System.out.println("the value of z = " + z);
+        System.out.println("the value of z(fi(n)) = " + z);
 
         encryption(z, d, msg, n);
-        decryption(n, dec);
+        decryption(enc, dec, n);
+
 
 //
     }
 
     public static void encryption(int z, int d, int msg, int n) {
         int i, e;
-        double c;
         Scanner sc = new Scanner(System.in);
         System.out.print("values of e: ");
         for (e = 2; e < z; e++) {
@@ -75,18 +75,18 @@ public class RSA {
         }
         dec = d;
         System.out.println("the value of d = " + d);
-        c = (Math.pow(msg, en)) % n;
-        enc = c;
-        System.out.println("Encrypted message is : " + c);
+        BigInteger emg = BigInteger.valueOf(msg).pow(en).mod(BigInteger.valueOf(n));
+        //System.out.println("ec: " + emg);
+
+        enc = emg;
+        System.out.println("Encrypted message is : " + emg);
     }
 
-    public static void decryption(int n, double c) {
-        // converting int value of n to BigInteger
-        BigInteger N = BigInteger.valueOf(n);
+    public static void decryption(BigInteger en, double c, int n) {
 
 //        // converting float value of c to BigInteger
-        BigInteger C = BigDecimal.valueOf(c).toBigInteger();
-        BigInteger msgback = (C.pow(dec)).mod(N);
+        BigInteger C = BigDecimal.valueOf(n).toBigInteger();
+        BigInteger msgback = (en.pow(dec)).mod(C);
         System.out.println("Decrypted message is : "
                 + msgback);
     }
