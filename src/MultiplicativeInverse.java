@@ -15,6 +15,7 @@ public class MultiplicativeInverse {
         System.out.println("Enter the value of mode:");
         int mod = sc.nextInt();
         int count = 0;
+        // A naive method is to try all numbers from 1 to m. For every number x, check if (A * i) % Mod is 1
         for (int i = 1; i <= mod; i++) {
             if ((a * i) % mod == 1) {
                 System.out.println("Inverse:" + i);
