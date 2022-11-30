@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb5fa432-8624-4458-afe5-683dce754418" name="Changes" comment="" />
+    <list default="true" id="fb5fa432-8624-4458-afe5-683dce754418" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/MultiplicativeInverse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -126,7 +129,8 @@
       <workItem from="1668048464893" duration="5200000" />
       <workItem from="1668269706796" duration="4243000" />
       <workItem from="1668654225576" duration="3558000" />
-      <workItem from="1668952507328" duration="777000" />
+      <workItem from="1668952507328" duration="2931000" />
+      <workItem from="1669815106568" duration="739000" />
     </task>
     <task id="LOCAL-00001" summary="Crypto lab content">
       <created>1668953022322</created>
@@ -135,7 +139,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668953022322</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Crypto lab content">
+      <created>1668953321642</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1668953321642</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
