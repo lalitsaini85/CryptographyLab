@@ -1,6 +1,5 @@
+import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -11,104 +10,85 @@ import java.util.Scanner;
  * File Name : RSASignature.java
  */
 public class RSASignature {
-    static List<Integer> d = new ArrayList<>();
-    static List<Integer> e = new ArrayList<>();
+    static int dec = 0;
+    static int ekey = 0;
+    static BigInteger enc;
 
-    public static void main(String[] args) {
+    public static void main(String args[]) {
+        int p, q, n, z, d = 0, e, i;
         Scanner sc = new Scanner(System.in);
-        boolean pF = false;
-        boolean qF = false;
-        boolean FF = false;
-        int p = 0, q = 0;
-
-        while (FF == false) {
-            while (pF == false) {
-                System.out.print("Enter Value of P:");
-                p = sc.nextInt();
-                pF = isPrime(p);
-                if (pF == false)
-                    System.out.println("Enter Prime Number");
-            }
-            System.out.println();
-            while (qF == false) {
-                System.out.print("Enter Value of Q:");
-                q = sc.nextInt();
-                qF = isPrime(q);
-                if (qF == false)
-                    System.out.println("Enter Prime Number");
-            }
-
-            if (p == q) {
-                System.out.println("Both p and q are equal..Enter diffent value");
-                qF = false;
-                pF = false;
-                FF = false;
-            } else {
-                FF = true;
-            }
+        System.out.println("Enter values of P and Q respectively: ");
+        p = sc.nextInt();
+        q = sc.nextInt();
+        while (p == q || !isPrime(p) || !isPrime(q)) {
+            System.out.println("Enter correct values of p and q: ");
+            p = sc.nextInt();
+            q = sc.nextInt();
         }
 
-        System.out.println("p=" + p + "q=" + q);
-
-
-        int n = p * q;
-        int pn = (p - 1) * (q - 1);
-        for (int i = 2; i <= pn; i++) {
-            if (gcd(i, pn) == 1) {
-                e.add(i);
-            }
+        n = p * q;
+        System.out.println("Enter message: ");
+        int msg = sc.nextInt();
+        while (msg > n) {
+            System.out.println("Enter correct message: ");
+            msg = sc.nextInt();
         }
-        System.out.println("pi(n)=" + pn);
+        z = (p - 1) * (q - 1); // fi(n);
+        System.out.println("the value of z(fi(n)) = " + z);
 
-
-        boolean newFlag = false;
-
-        int k = 0;
-        while (newFlag == false) {
-            System.out.println("Choose Your Key=");
-            System.out.println(e);
-            k = sc.nextInt();
-            if (e.contains(k)) {
-                newFlag = true;
-            }
-        }
-        int dekey = 0;
-
-        boolean aa = false;
-        while (aa == false) {
-            if ((k * dekey) % pn == 1) {
-                aa = true;
-            } else dekey += 1;
-        }
-
-
-        System.out.println("e=" + k + "  d=" + dekey);
-
-        System.out.print("Enter the Value of Message=");
-        double m = sc.nextInt();
-
-        long sig = (long) (Math.pow(m, dekey)) % n;
-        long sig1 = (long) (Math.pow(sig, k)) % n;
+        encryption(z, d, msg, n);
+        decryption(enc, dec, n);
+        BigInteger sig = BigInteger.valueOf(msg).pow(dec).mod(BigInteger.valueOf(n));
+        BigInteger sig1 = sig.pow(ekey).mod(BigInteger.valueOf(n));
         System.out.println("Signature:" + sig);
         System.out.println("Signature Inverse:" + sig1);
-
-
-        // Encryption c = (msg ^ e) % n
-        long c = (long) (Math.pow(m, k)) % n;
-        System.out.println("Encyption=" + c);
-
-
-        // Decryption m = (c ^ d) % n
-        BigInteger answer = BigInteger.valueOf(c).pow(dekey);
-        BigInteger nn = BigInteger.valueOf(n);
-        BigInteger ans = answer.mod(nn);
-        System.out.println("Decyption=" + ans);
-        int aa1 = (int) sig1;
-        if (sig1 == m) {
+        if (msg == sig1.intValue()) {
             System.out.println("Verified");
         }
 
+    }
 
+    public static void encryption(int z, int d, int msg, int n) {
+        int i, e;
+        Scanner sc = new Scanner(System.in);
+        System.out.print("values of e: ");
+        for (e = 2; e < z; e++) {
+
+            // e is for public key
+            if (gcd(e, z) == 1) {
+                System.out.print(e + " ");
+                //break;
+            }
+        }
+        System.out.println("Choose the value of e: ");
+        int en = sc.nextInt();
+        System.out.println("the value of e = " + en);
+        ekey = en;
+        for (i = 0; i <= 9; i++) {
+            int x = 1 + (i * z);
+
+            // d is for private key
+            if (x % en == 0) {
+                d = x / en;
+                break;
+            }
+        }
+        dec = d;
+        System.out.println("the value of d = " + d);
+        BigInteger emg = BigInteger.valueOf(msg).pow(en).mod(BigInteger.valueOf(n));
+        //System.out.println("ec: " + emg);
+
+        enc = emg;
+        System.out.println("Encrypted message is : " + emg);
+    }
+
+    public static void decryption(BigInteger en, double c, int n) {
+
+//        // converting float value of c to BigInteger
+        BigInteger C = BigDecimal.valueOf(n).toBigInteger();
+        BigInteger msgback = (en.pow(dec)).mod(C);
+        System.out.println("Decrypted message is : "
+                + msgback);
     }
 
     static int gcd(int e, int z) {
